@@ -33,6 +33,8 @@ st.write("Current Market Time:", appointment)
 
 st.write('ATM {}'.format(data[str(appointment)]['ATM']))
 
+st.write('Spot Price {}'.format(data[str(appointment)]['Spot']))
+
 st.write('MarketProfile POC {}'.format(data[str(appointment)]['Market_Profile_poc']))
 
 k=pd.DataFrame.from_dict(data[str(appointment)]['5Strike'])
