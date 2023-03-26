@@ -36,16 +36,26 @@ col2.metric("Spot Price", data[str(appointment)]['Spot'], "")
 col3.metric("MarketProfile", data[str(appointment)]['Market_Profile_poc'], "")
 
 col1, col2, col3 ,col4= st.columns(4)
-col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_COI'].apply(int).sum(), "")
+col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_COI'].apply(int).sum()-pd.DataFrame(data[str(appointment)]['5Strike'])['CE_COI'].apply(int).iloc[0], "")
 col2.metric("CE_TOI", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_TOI'].apply(int).sum(), "")
-col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_COI'].apply(int).sum(), "")
+col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_COI'].apply(int).sum()-pd.DataFrame(data[str(appointment)]['5Strike'])['PE_COI'].apply(int).iloc[0], "")
 col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_TOI'].apply(int).sum(), "")
 
 col1, col2, col3 ,col4= st.columns(4)
-col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).sum(), "")
+col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).sum()-pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).iloc[0], "")
+col2.metric("CE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_TOI'].apply(int).sum(), "")
+col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum()-pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).iloc[0], "")
+col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
+
+
+
+col1, col2, col3 ,col4, col5 ,col6= st.columns(6)
+col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).max(), "")
 col2.metric("CE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_TOI'].apply(int).sum(), "")
 col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum(), "")
 col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
+col5.metric("PE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum(), "")
+col6.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
 
 
 k=pd.DataFrame.from_dict(data[str(appointment)]['5Strike'])
