@@ -49,14 +49,6 @@ col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI']
 
 
 
-col1, col2, col3 ,col4, col5 ,col6= st.columns(6)
-col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).max(), "")
-col2.metric("CE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_TOI'].apply(int).sum(), "")
-col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum(), "")
-col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
-col5.metric("PE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum(), "")
-col6.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
-
 
 k=pd.DataFrame.from_dict(data[str(appointment)]['5Strike'])
 k.index=k['#']#.apply(int)
