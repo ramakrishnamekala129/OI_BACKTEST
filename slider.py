@@ -69,7 +69,7 @@ fig = go.Figure()
 k=pd.DataFrame.from_dict(data[str(appointment)]['5Strike'])
 k.index=k['#']#.apply(int)
 k=k[['CE_COI',   'CE_TOI'  ,'PE_COI',  'PE_TOI']]
-fig.add_trace(go.Bar(name='CE %', x=k.index, y=k.CE_COI ,offsetgroup=0,base=k.PE_TOI,marker_color = '#83C9FF'))
+fig.add_trace(go.Bar(name='CE %', x=k.index, y=k.CE_COI ,offsetgroup=0,base=k.CE_TOI,marker_color = '#83C9FF'))
 fig.add_trace(go.Bar(name='CE', x=k.index, y=k.CE_TOI ,offsetgroup=0,marker_color='#0068C9'))
 
 fig.add_trace(go.Bar(name='PE', x=k.index, y=k.PE_TOI,offsetgroup=1,marker_color='#FF2B2B'))
