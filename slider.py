@@ -30,26 +30,35 @@ st.write("Current Market Time:", appointment)
 
 
 #st.write(data[str(appointment)])
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 ,col4= st.columns(4)
 col1.metric("ATM", data[str(appointment)]['ATM'], "")
 col2.metric("Spot Price", data[str(appointment)]['Spot'], "")
 col3.metric("MarketProfile", data[str(appointment)]['Market_Profile_poc'], "")
+col4.metric("VolumeProfile", data[str(appointment)]['Volume_Profile_poc'], "")
+
+
 
 col1, col2, col3 ,col4= st.columns(4)
-col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_COI'].apply(int).sum(),"")##-pd.DataFrame(data[str(appointment)]['5Strike'])['CE_COI'].apply(int).iloc[0], "")
-col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_COI'].apply(int).sum(),"")#-pd.DataFrame(data[str(appointment)]['5Strike'])['PE_COI'].apply(int).iloc[0], "")
+col1.metric("CE_COI_5", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_COI'].apply(int).sum(), "")#-pd.DataFrame(data['09:18:00']['5Strike'])['CE_COI'].apply(int).iloc[0], "")
+col2.metric("PE_COI_5", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_COI'].apply(int).sum(), "")#-pd.DataFrame(data['09:18:00']['5Strike'])['PE_COI'].apply(int).iloc[0], "")
+col3.metric("CE_COI_10", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).sum(), "")#-pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).iloc[0], "")
+col4.metric("PE_COI_10", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum(), "")#-pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).iloc[0], "")
 
-col2.metric("CE_TOI", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_TOI'].apply(int).sum(), "")
-col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_TOI'].apply(int).sum(), "")
+
 
 col1, col2, col3 ,col4= st.columns(4)
-col1.metric("CE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).sum(),"")#-pd.DataFrame(data[str(appointment)]['10Strike'])['CE_COI'].apply(int).iloc[0], "")
-col3.metric("PE_COI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).sum(),"")#-pd.DataFrame(data[str(appointment)]['10Strike'])['PE_COI'].apply(int).iloc[0], "")
-
-col2.metric("CE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_TOI'].apply(int).sum(), "")
-col4.metric("PE_TOI", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
 
 
+col1.metric("CE_TOI_5", pd.DataFrame(data[str(appointment)]['5Strike'])['CE_TOI'].apply(int).sum(), "")
+col2.metric("PE_TOI_5", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_TOI'].apply(int).sum(), "")
+
+col3.metric("CE_TOI_10", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_TOI'].apply(int).sum(), "")
+col4.metric("PE_TOI_10", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
+
+st.write('Volume Profile')
+st.json(data[str(appointment)]['VolumeProfile'])
+st.write('Market Profile')
+st.json(data[str(appointment)]['MarketProfile'])
 
 
 k=pd.DataFrame.from_dict(data[str(appointment)]['5Strike'])
@@ -95,6 +104,8 @@ fig.add_trace(go.Bar(name='PE', x=k.index, y=k.PE_TOI,offsetgroup=1,marker_color
 fig.add_trace(go.Bar(name='PE %', x=k.index, y=k.PE_COI,offsetgroup=1,base=k.PE_TOI,marker_color='#FFABAB'))
 
 st.plotly_chart(fig,  theme="streamlit",use_container_width=True)
+
+
 
 st.dataframe(pd.DataFrame.from_dict(data[str(appointment)]['5Strike']))
 
