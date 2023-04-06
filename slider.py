@@ -21,14 +21,14 @@ st.write('Display Date is:', datetime.date(2023, 3, 9))
 for i in filesnames:
     if o in i:
         with open('{}'.format(i)) as json_file:
-            data = json.load(json_file)
+            data = eval(json.load(json_file))
          
             # Print the type of data variable
             print("Type:", type(data))
 appointment = st.slider(    "Select Market time:",    min_value=time(9, 15),max_value=time(15,30),    value=time(9, 16),step=timedelta(minutes=1))
 st.write("Current Market Time:", appointment)
 
-
+#st.write(data)
 #st.write(data[str(appointment)])
 col1, col2, col3 ,col4= st.columns(4)
 col1.metric("ATM", data[str(appointment)]['ATM'], "")
@@ -55,10 +55,62 @@ col2.metric("PE_TOI_5", pd.DataFrame(data[str(appointment)]['5Strike'])['PE_TOI'
 col3.metric("CE_TOI_10", pd.DataFrame(data[str(appointment)]['10Strike'])['CE_TOI'].apply(int).sum(), "")
 col4.metric("PE_TOI_10", pd.DataFrame(data[str(appointment)]['10Strike'])['PE_TOI'].apply(int).sum(), "")
 
+col1, col2, col3 ,col4,col5,col6= st.columns(6)
+
+
+col1.metric("EOD_R1", data['EOD_RS']['EOD_R1'], "")
+col2.metric("EOD_S1", data['EOD_RS']['EOD_S1'], "")
+
+col3.metric("5_R1", data[str(appointment)]['5RS']['5_R1'], "")
+col4.metric("5_S1", data[str(appointment)]['5RS']['5_S1'], "")
+
+col5.metric("10_R1", data[str(appointment)]['10RS']['10_R1'], "")
+col6.metric("10_S1", data[str(appointment)]['10RS']['10_S1'], "")
+
+
+
+col1, col2, col3 ,col4,col5,col6= st.columns(6)
+
+
+col1.metric("EOD_R2", data['EOD_RS']['EOD_R2'], "")
+col2.metric("EOD_S2", data['EOD_RS']['EOD_S2'], "")
+
+col3.metric("5_R2", data[str(appointment)]['5RS']['5_R2'], "")
+col4.metric("5_S2", data[str(appointment)]['5RS']['5_S2'], "")
+
+col5.metric("10_R2", data[str(appointment)]['10RS']['10_R2'], "")
+col6.metric("10_S2", data[str(appointment)]['10RS']['10_S2'], "")
+
+
+
+col1, col2, col3 ,col4,col5,col6= st.columns(6)
+
+
+col1.metric("EOD_R3", data['EOD_RS']['EOD_R3'], "")
+col2.metric("EOD_S3", data['EOD_RS']['EOD_S3'], "")
+
+col3.metric("5_R3", data[str(appointment)]['5RS']['5_R3'], "")
+col4.metric("5_S3", data[str(appointment)]['5RS']['5_S3'], "")
+
+col5.metric("10_R3", data[str(appointment)]['10RS']['10_R3'], "")
+col6.metric("10_S3", data[str(appointment)]['10RS']['10_S3'], "")
+
+
+
 st.write('Volume Profile')
 st.json(data[str(appointment)]['VolumeProfile'])
 st.write('Market Profile')
 st.json(data[str(appointment)]['MarketProfile'])
+
+st.write('EOD')
+
+k=pd.DataFrame.from_dict(data['EOD'])
+k.index=k['#']#.apply(int)
+k=k[['CE_COI',   'CE_TOI'  ,'PE_COI',  'PE_TOI']]
+fig=px.bar(k, orientation='h' ,text_auto=True,barmode='group',color_discrete_map={'CE_TOI':'#FF2B2B','CE_COI':'#FFABAB','PE_TOI':'#0068C9','PE_COI':'#83C9FF'})
+fig.update_traces(textfont_size=27, textangle=0, textposition="outside", cliponaxis=False)
+st.plotly_chart(fig,  theme="streamlit",use_container_width=True)
+
 
 
 k=pd.DataFrame.from_dict(data[str(appointment)]['5Strike'])
