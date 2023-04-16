@@ -18,7 +18,7 @@ for i in os.listdir():
             filesnames.append(i)
             dates.append(i.replace('BANKNIFTY_','').replace('_at_minute.json',''))
 o=st.selectbox('Select Date :',dates)
-st.write('Display Date is:', datetime.date(2023, 3, 9))
+st.write('Display Date is:', o)
 # Opening JSON file
 m=st.sidebar.text_input('Option Range',value=10)
 
