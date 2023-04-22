@@ -49,8 +49,8 @@ for i in range(0,6):
 eodselect=eodselect[eodselect['#'].isin(strikes)]
 eodselect['PCR']=round((eodselect['PE_TOI']/eodselect['CE_TOI']),2)
 eodselect['CPR']=round((eodselect['CE_TOI']/eodselect['PE_TOI']),2)
-eodselect['CE_PCT']=round((eodselect['CE_PCT']*100),2)
-eodselect['PE_PCT']=round((eodselect['PE_PCT']*100),2)
+eodselect['CE_PCT']=round((eodselect['CE_PCT']),2)
+eodselect['PE_PCT']=round((eodselect['PE_PCT']),2)
 eodselect['CE_PCT']=eodselect['CE_PCT'].apply(str)+'%'
 eodselect['PE_PCT']=eodselect['PE_PCT'].apply(str)+'%'
 
@@ -81,6 +81,10 @@ S=S[:3]
 df1=pd.DataFrame([R,S],columns=['R/S_1','R/S_2','R/S_3'])  
 df1.index=['R','S']
 st.dataframe(df1)
+st.dataframe(pd.DataFrame.from_dict(data1['poc_df']))
+poc_i=pd.DataFrame(data1['poc_concl'][:data1['poc_n']],columns=['time','Strike','CE_COI','PE_COI','Diff','CE_PCT','PE_PCT']).iloc[::-1]
+poc_i['PCT_Diff']=poc_i['PE_PCT']-poc_i['CE_PCT']
+st.dataframe(poc_i)
 vp=data[str(appointment)]['VolumeProfile']
 mp=data[str(appointment)]['MarketProfile']
 df2=pd.DataFrame([[int(vp['poc']),int(vp['low']),int(vp['high']),int(vp['val']),int(vp['vah']),int(vp['or_low']),int(vp['or_high']),int(vp['ib_low']),int(vp['ib_high']),int(vp['bt'])],
@@ -111,6 +115,7 @@ st.dataframe(df3)
 #st.write(data)
 #st.write(data[str(appointment)])
 st.dataframe(df)
+st.write(data1['poc_n'])
 st.write('Volume Profile')
 st.json(vp)
 st.write('Market Profile')
